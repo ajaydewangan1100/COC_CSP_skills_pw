@@ -1,0 +1,18 @@
+export const CENTRES = [
+  "Bangalore",
+  "Bhopal",
+  "Chandigarh",
+  "Delhi - Vivek Vihar",
+  "Delhi - Janakpuri",
+  "Gurugram",
+  "Indore",
+  "Jaipur",
+  "Kanpur",
+  "Lucknow",
+  "Noida",
+  "Patna",
+  "Pune",
+  "Ranchi - Harmu",
+  "Ranchi - Lalpur",
+  "Varanasi",
+];
