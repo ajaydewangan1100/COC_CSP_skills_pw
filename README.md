@@ -90,3 +90,5 @@ The phone is checked in column D of all batch tabs (names like `DA-6`). Other ta
 ## Next.js route
 
 In `route.ts`, treat any response without `status: "success"` as an error. A non-JSON response, such as an HTML error page, should not count as a successful submission.
+
+
