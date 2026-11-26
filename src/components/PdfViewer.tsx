@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { usesUpdatedCspPolicy } from "@/constants/batches";
 
 
 interface PdfViewerProps {
@@ -25,7 +26,7 @@ export default function PdfViewer({ onLoadSuccess, docType = "coc", batch }: Pdf
         pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
         let pdfPath = docType === "csp" ? "/pwskills_csp.pdf" : "/pwskills_coc.pdf";
-        if (docType === "csp" && batch === "Data Analytics with Gen AI - Batch 6") {
+        if (docType === "csp" && usesUpdatedCspPolicy(batch)) {
           pdfPath = "/pwskills_csp_batch6.pdf";
         }
         const loadingTask = pdfjsLib.getDocument({ url: pdfPath });
@@ -112,7 +113,7 @@ export default function PdfViewer({ onLoadSuccess, docType = "coc", batch }: Pdf
     return () => {
       isMounted = false;
     };
-  }, [onLoadSuccess, docType]);
+  }, [onLoadSuccess, docType, batch]);
 
   return (
     <div className="border border-border rounded-lg overflow-hidden bg-[#E2E8F0] shadow-inner w-full relative">
@@ -127,10 +128,10 @@ export default function PdfViewer({ onLoadSuccess, docType = "coc", batch }: Pdf
 
       {error ? (
         <div className="h-[650px] overflow-y-auto w-full flex flex-col items-center" style={{ WebkitOverflowScrolling: 'touch' }}>
-          {Array.from({ length: docType === "csp" ? (batch === "Data Analytics with Gen AI - Batch 6" ? 8 : 7) : 9 }).map((_, i) => (
+          {Array.from({ length: docType === "csp" ? (usesUpdatedCspPolicy(batch) ? 8 : 7) : 9 }).map((_, i) => (
             <img 
               key={i} 
-              src={`/${docType === "csp" ? (batch === "Data Analytics with Gen AI - Batch 6" ? "csp-batch6" : "csp") : "coc"}-fallback/page-${i + 1}.png`} 
+              src={`/${docType === "csp" ? (usesUpdatedCspPolicy(batch) ? "csp-batch6" : "csp") : "coc"}-fallback/page-${i + 1}.png`}
               alt={`${docType === "csp" ? "Career Services Policy" : "Code of Conduct"} Page ${i + 1}`}
               className="w-full h-auto block m-0 border-b border-gray-200"
               loading="lazy"
@@ -148,7 +149,7 @@ export default function PdfViewer({ onLoadSuccess, docType = "coc", batch }: Pdf
 
       {(totalPages || error) && (
         <div className="text-center p-2.5 bg-surface border-t border-border text-[13px] font-semibold text-text-secondary shadow-[0_-2px_10px_rgba(0,0,0,0.05)] relative z-20">
-          Total Pages: {totalPages || (docType === "csp" ? (batch === "Data Analytics with Gen AI - Batch 6" ? 8 : 7) : 9)}
+          Total Pages: {totalPages || (docType === "csp" ? (usesUpdatedCspPolicy(batch) ? 8 : 7) : 9)}
         </div>
       )}
     </div>

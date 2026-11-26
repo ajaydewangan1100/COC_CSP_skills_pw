@@ -1,4 +1,5 @@
 import { StudentData } from "@/context/FormContext";
+import { usesUpdatedCspPolicy } from "@/constants/batches";
 
 export async function generatePdfBase64(
   studentData: StudentData,
@@ -11,7 +12,7 @@ export async function generatePdfBase64(
 
   
   let pdfUrl = docType === "csp" ? "/pwskills_csp.pdf" : "/pwskills_coc.pdf";
-  if (docType === "csp" && studentData.batch === "Data Analytics with Gen AI - Batch 6") {
+  if (docType === "csp" && usesUpdatedCspPolicy(studentData.batch)) {
     pdfUrl = "/pwskills_csp_batch6.pdf";
   }
   const response = await fetch(pdfUrl);
